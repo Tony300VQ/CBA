@@ -75,7 +75,7 @@
         }
 
         function addWord(word, meaning) {
-            const level = getRandomInt(1, 100);
+            const level = getRandomInt(1, 10);
             dictionary.push({ word, meaning, level });
             dictionary.sort((a, b) => a.level - b.level);
             renderTable();
