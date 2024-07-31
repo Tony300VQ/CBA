@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dictionary</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Word</th>
+                <th>Meaning</th>
+                <th>Level</th>
+            </tr>
+        </thead>
+        <tbody id="dictionary">
+            <!-- Data will be added here via JavaScript -->
+        </tbody>
+    </table>
+
+    <form id="form">
+        <input type="text" id="word" placeholder="Word" required>
+        <input type="text" id="meaning" placeholder="Meaning" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <script>
+        let dictionary = [
+            { word: 'Friendship', meaning: 'A relationship of mutual affection, trust, and sympathy between people who are not family.' },
+            { word: 'Science', meaning: 'A systematic enterprise that builds and organizes knowledge in the form of testable explanations and predictions about the universe.' },
+            { word: 'Freedom', meaning: 'The power or right to act, speak, or think as one wants without hindrance or restraint.' },
+            { word: 'Technology', meaning: 'The application of scientific knowledge for practical purposes, especially in industry.' }
+        ];
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('dictionary');
+            tbody.innerHTML = '';
+
+            dictionary.forEach(entry => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${entry.word}</td>
+                    <td>${entry.meaning}</td>
+                    <td>${entry.level}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function addWord(word, meaning) {
+            const level = getRandomInt(1, 100);
+            dictionary.push({ word, meaning, level });
+            dictionary.sort((a, b) => a.level - b.level);
+            renderTable();
+        }
+
+        document.getElementById('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const word = document.getElementById('word').value;
+            const meaning = document.getElementById('meaning').value;
+            addWord(word, meaning);
+            document.getElementById('word').value = '';
+            document.getElementById('meaning').value = '';
+        });
+
+        dictionary.forEach(entry => {
+            entry.level = getRandomInt(1, 10);
+        });
+        dictionary.sort((a, b) => a.level - b.level);
+        renderTable();
+    </script>
+</body>
+</html>
+
+
